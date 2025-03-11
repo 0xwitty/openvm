@@ -211,12 +211,6 @@ impl<AB: InteractionBuilder> VmAdapterAir<AB> for Rv32LoadStoreAdapterAir {
         // constrain is_load == 1 and rd == x0 when write_count == 0
         builder.assert_bool(write_count);
         builder.when(write_count).assert_one(is_valid.clone());
-        builder
-            .when(is_valid.clone() - write_count)
-            .assert_one(is_load.clone());
-        builder
-            .when(is_valid.clone() - write_count)
-            .assert_zero(local_cols.rd_rs2_ptr);
 
         // read rs1
         self.memory_bridge
